@@ -11,9 +11,13 @@ async function searchQuery() {
   console.log(recipeData);
 
   const filteredData = recipeData.filter((data) => {
-    return data.title.toLowerCase().includes(searchValue) || data.ingredients.join(" ").toLowerCase().includes(searchValue);
+    if(data.title && data.description){
+      return data.title.toLowerCase().includes(searchValue) || data.description.toLowerCase().includes(searchValue);
+    }
   });
-  displayData(filteredData);
+  if(searchValue !== ""){
+    displayData(filteredData);
+  }
 }
 
 function displayData(filteredData) {
@@ -55,3 +59,9 @@ function showDetail(detail) {
     </div>
     `;
 }
+
+const changemode = document.getElementById('changemode')
+changemode.addEventListener('change', ()=>{
+  document.body.classList.toggle('dark-mode')
+  document.body.classList.toggle('light-mode')
+})
