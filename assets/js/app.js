@@ -14,14 +14,37 @@ async function searchQuery() {
     if(data.title && data.description){
       return data.title.toLowerCase().includes(searchValue) || data.description.toLowerCase().includes(searchValue);
     }
+    // else{
+    //   return Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: `Sorry ${searchValue} Recipy Not Available`,
+    //   });
+    // }
   });
   if(searchValue !== ""){
-    displayData(filteredData);
+    displayData(filteredData, searchValue);
+  }
+  else{
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please Type Recipe Name!",
+    });
   }
 }
 
-function displayData(filteredData) {
+function displayData(filteredData, searchValue) {
+  console.log(filteredData, "filteredData");
   ulGroupRecipe.innerHTML = "";
+  ulDetailedRecipe.innerHTML = "";
+  if(filteredData.length === 0){
+    Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Sorry ${searchValue} Recipy Not Available`,
+        });
+  }
   filteredData.forEach((data) => {
     const listItem = document.createElement("li");
     listItem.classList.add("list-group-item");
@@ -65,3 +88,4 @@ changemode.addEventListener('change', ()=>{
   document.body.classList.toggle('dark-mode')
   document.body.classList.toggle('light-mode')
 })
+
